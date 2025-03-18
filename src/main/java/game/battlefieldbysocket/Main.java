@@ -3,9 +3,9 @@ package game.battlefieldbysocket;
 import game.battlefieldbysocket.B_useCases.UseCaseInteractor;
 import game.battlefieldbysocket.C_adapters.Controller;
 import game.battlefieldbysocket.C_adapters.Presenter;
-import game.battlefieldbysocket.D_frameworksAndDrivers.ui.JavaFxView;
+//import game.battlefieldbysocket.D_frameworksAndDrivers.ui.JavaFxView;
+//import javafx.scene.Scene;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import game.battlefieldbysocket.C_adapters.AdapterOutputPort;
 import game.battlefieldbysocket.D_frameworksAndDrivers.ui.SwingView;
@@ -21,12 +21,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        JavaFxView javaFxView = new JavaFxView();
-        setUp(javaFxView);
-        Scene scene = javaFxView.createScene();
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Battle Field");
-        primaryStage.show();
+//        JavaFxView javaFxView = new JavaFxView();
+//        setUp(javaFxView);
+//        Scene scene = javaFxView.createScene();
+//        primaryStage.setScene(scene);
+//        primaryStage.setTitle("Battle Field");
+//        primaryStage.show();
     }
 
     private static void startSwing(){

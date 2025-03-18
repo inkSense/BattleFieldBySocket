@@ -1,17 +1,20 @@
 package game.battlefieldbysocket.A_entities.objectsAndDataStructures;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
 
     private Board board;
-    private List<Ship> ships;
+    private List<Ship> ships ;
     private String teamName;
 
     public Player(Board board, String teamName) {
         this.board = board;
         this.teamName = teamName;
+        this.ships = new ArrayList<>();
     }
 
     public Board getBoard() {

@@ -29,6 +29,14 @@ public class Game {
     public Player getPlayer2() {
         return player2;
     }
+
+    public Board getBoardOfCurrentPlayer(){
+        if(currentPlayer == 1){
+            return player1.getBoard();
+        } else {
+            return player2.getBoard();
+        }
+    }
     public Board getBoardOfOppositePlayer(Player player){
         if(player == player1){
             return player2.getBoard();
@@ -36,6 +44,7 @@ public class Game {
             return player1.getBoard();
         }
     }
+
 
     public Map getConf() {
         return conf;

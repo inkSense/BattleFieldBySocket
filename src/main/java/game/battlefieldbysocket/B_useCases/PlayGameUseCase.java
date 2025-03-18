@@ -53,6 +53,10 @@ public class PlayGameUseCase {
         return hasPoint && pointFree;
     }
 
+    boolean gameIsOver(){
+        return false;
+    }
+
 
 
 }

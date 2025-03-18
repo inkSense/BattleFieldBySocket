@@ -14,8 +14,6 @@ public class SwingView implements AdapterOutputPort {
     private final int fieldSideLength = 100;
     private final JPanel grid = new JPanel();
     private final JTextArea logArea = new JTextArea();
-
-    // Hinzugefügt: Ein 2D-Array für die Felder
     private JPanel[][] fields;
 
     public SwingView() {
@@ -51,6 +49,7 @@ public class SwingView implements AdapterOutputPort {
         frame.add(grid, BorderLayout.CENTER);
         frame.add(new JScrollPane(logArea), BorderLayout.SOUTH);
         frame.setVisible(true);
+
     }
 
     private JPanel createClickableField(int x, int y) {

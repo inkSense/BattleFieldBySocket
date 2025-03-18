@@ -12,4 +12,6 @@ public class Cell {
     public Point position;
     public boolean hit;
     public boolean occupied;
+
+
 }

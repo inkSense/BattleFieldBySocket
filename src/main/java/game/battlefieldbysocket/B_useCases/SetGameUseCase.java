@@ -22,6 +22,7 @@ public class SetGameUseCase {
 
         createShipsBasedOnConf(player1.getTeamName(), player2.getTeamName());
         distributeShipsRandomly();
+
         return game;
     }
 
@@ -74,6 +75,8 @@ public class SetGameUseCase {
             break outerLoop;
         }
         ship.setSegments(points);
+        board.setOccupied(points);
+
     }
 
     private List<Point> buildRandomAdjacentPoints(int numberOfPoints) {

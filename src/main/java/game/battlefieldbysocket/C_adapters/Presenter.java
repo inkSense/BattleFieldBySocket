@@ -1,7 +1,7 @@
 package game.battlefieldbysocket.C_adapters;
 
+import game.battlefieldbysocket.A_entities.objectsAndDataStructures.*;
 import game.battlefieldbysocket.B_useCases.UseCaseOutputPort;
-
 import java.awt.*;
 
 public class Presenter implements UseCaseOutputPort {
@@ -41,7 +41,24 @@ public class Presenter implements UseCaseOutputPort {
         adapterOutputPort.markFieldWithLabel(point, "HIT");
     }
 
+    public void setFieldToShipLabel(Point point){
+        adapterOutputPort.markFieldWithLabel(point, "Boat");
+    }
 
+
+    public void presentGame(Game game){
+        Board board = game.getBoardOfCurrentPlayer();
+        for(Cell cell : board.getCells()){
+            if(cell.occupied){
+                // Do nothing
+                //setFieldToShipLabel(cell.position);
+            }
+            if(cell.hit){
+                setFieldToHit(cell.position);
+            }
+        }
+
+    };
 
 
 }
