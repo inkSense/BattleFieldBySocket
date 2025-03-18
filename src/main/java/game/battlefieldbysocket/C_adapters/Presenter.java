@@ -23,7 +23,7 @@ public class Presenter implements UseCaseOutputPort {
     }
 
     @Override
-    public Point askPlayerWhereToShoot(String teamName){
+    public Point askPlayerWhereToShoot(int playerNumber){
         Point shot = adapterOutputPort.setOpenForInputAndGetIt();
         return shot;
     }
@@ -47,17 +47,16 @@ public class Presenter implements UseCaseOutputPort {
 
 
     public void presentGame(Game game){
-        Board board = game.getBoardOfCurrentPlayer();
+        Board board = game.getPlayer(0).getBoard();
         for(Cell cell : board.getCells()){
-            if(cell.occupied){
-                // Do nothing
-                //setFieldToShipLabel(cell.position);
-            }
             if(cell.hit){
-                setFieldToHit(cell.position);
+                if(cell.occupied){
+                    setFieldToStruck(cell.position);
+                } else {
+                    setFieldToHit(cell.position);
+                }
             }
         }
-
     };
 
 

@@ -1,13 +1,17 @@
 package game.battlefieldbysocket.A_entities.objectsAndDataStructures;
 
+import game.battlefieldbysocket.B_useCases.UseCaseInteractor;
+
 import java.util.List;
 import java.awt.*;
+import java.util.logging.Logger;
 
 public class Ship {
     private final String teamName;
     private final int numberOfSegments;
     private int numberOfHitSegments;
     private List<Point> segments;
+    private static final Logger log = Logger.getLogger(Ship.class.getName());
 
     Ship(String teamName, int numberOfSegments){
         this.teamName = teamName;
@@ -45,9 +49,12 @@ public class Ship {
         return numberOfSegments == numberOfHitSegments;
     }
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Ship{" +
+                "numberOfSegments=" + numberOfSegments +
+                ", numberOfHitSegments=" + numberOfHitSegments +
+                ", segments=" + segments +
+                '}';
+    }
 }

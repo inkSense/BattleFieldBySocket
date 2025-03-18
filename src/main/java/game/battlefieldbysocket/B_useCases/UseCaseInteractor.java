@@ -3,10 +3,13 @@ package game.battlefieldbysocket.B_useCases;
 import game.battlefieldbysocket.A_entities.objectsAndDataStructures.*;
 
 import java.awt.*;
+import java.util.logging.Logger;
 
 public class UseCaseInteractor {
     UseCaseOutputPort useCaseOutputPort;
     Game game;
+
+    private static final Logger log = Logger.getLogger(UseCaseInteractor.class.getName());
 
     public UseCaseInteractor(UseCaseOutputPort port) {
         this.useCaseOutputPort = port;
@@ -28,32 +31,42 @@ public class UseCaseInteractor {
         useCaseOutputPort.presentFieldLabel(point, pointString);
     }
 
+
+
     public void processShot(Point point){
 
-        PlayGameUseCase playGame = new PlayGameUseCase(game);
+        var playGame = new PlayGameUseCase(game);
+        var report = new ReportStatusUseCase(game);
 
 
-        Player player2 = game.getPlayer2();
-        for(Cell cell: player2.getBoard().getCells()){
-            if(cell.position.equals(point)){
-                cell.hit = true;
-                if(cell.occupied){
-                    for(Ship ship: player2.getShips()){
-                        for(Point segment : ship.getSegments()){
-                            if(segment.equals(point)){
-                                ship.incrementNumberOfHitSegments();
-                            }
-                        }
-                    }
-
-                }
-            }
+        if(playGame.isValidOnBoardOfPlayer(point, 0)) {
+            playGame.putShotToBoardOfPlayer(point, 0);
+            playGame.updateShipsOfPlayer(point, 0);
+        } else {
+            log.info("No Valid Shot. Choose again.");
         }
 
+//        report.reportStatusOfBoards();
+//        report.reportStatusOfShips();
 
+
+        if(playGame.isOver()){
+            log.info("Isch over.");
+        }
 
         useCaseOutputPort.presentGame(game);
     }
+
+
+
+
+
+
+
+
+
+
+    //public increaseNumberOfHitSegmentsIfHit
 
     public int getSideLengthFromGameConf(){
         return GameConf.fieldSideLength;

@@ -13,5 +13,12 @@ public class Cell {
     public boolean hit;
     public boolean occupied;
 
-
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "position=" + position +
+                ", hit=" + hit +
+                ", occupied=" + occupied +
+                '}';
+    }
 }

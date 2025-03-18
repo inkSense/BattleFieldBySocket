@@ -1,14 +1,15 @@
 package game.battlefieldbysocket.A_entities.objectsAndDataStructures;
 
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
 public class Game {
 
-    private final Player player1;
-    private final Player player2;
+    private List<Player> players;
     private int currentPlayer;
 
     private Map conf;
@@ -16,33 +17,30 @@ public class Game {
     private static final Logger log = Logger.getLogger(Game.class.getName());
 
     public Game(Player player1, Player player2){
-        this.player1 = player1;
-        this.player2 = player2;
+        this.players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
         Random random = new Random();
-        currentPlayer = random.nextInt(2) + 1;
+        currentPlayer = random.nextInt(2);
     }
 
-    public Player getPlayer1() {
-        return player1;
+    public List<Player> getPlayers(){
+        return players;
     }
 
-    public Player getPlayer2() {
-        return player2;
+    public Player getPlayer(int playerNumber){
+        return players.get(playerNumber);
+    }
+
+    public int getCurrentPlayerNumber(){
+        return currentPlayer;
     }
 
     public Board getBoardOfCurrentPlayer(){
-        if(currentPlayer == 1){
-            return player1.getBoard();
-        } else {
-            return player2.getBoard();
-        }
+        return players.get(currentPlayer).getBoard();
     }
-    public Board getBoardOfOppositePlayer(Player player){
-        if(player == player1){
-            return player2.getBoard();
-        } else {
-            return player1.getBoard();
-        }
+    public Board getBoardOfOppositePlayer(){
+        return getOppositePlayer().getBoard();
     }
 
 
@@ -54,56 +52,39 @@ public class Game {
         this.conf = conf;
     }
 
-    public Player getOppositePlayer(Player player){
-        if(player == player1){
-            return player2;
+    public Player getOppositePlayer(){
+        if(currentPlayer == 0){
+            return players.get(1);
         } else {
-            return player1;
+            return players.get(0);
         }
     }
 
     public void addShipForPlayer1(Ship ship){
-        player1.addShip(ship);
+        players.get(0).addShip(ship);
     }
 
     public void addShipForPlayer2(Ship ship){
-        player2.addShip(ship);
+        players.get(1).addShip(ship);;
 
     }
 
-    public boolean isOver(){
-        if(allShipsOfPlayer1Sunk()){
-            return true;
-        }
-        if(allShipsOfPlayer2Sunk()){
-            return true;
-        }
-        return false;
-    }
+
 
     public void setHitToPlayer1Board(Point point){
-        player1.getBoard().setHit(point);
+        players.get(0).getBoard().setHit(point);
     }
 
     public boolean isAlreadyHitOnPlayer1Board(Point point){
-        return player1.getBoard().isAlreadyHit(point);
+        return players.get(0).getBoard().isAlreadyHit(point);
     }
 
     public boolean isAlreadyHitOnPlayer2Board(Point point){
-        return player2.getBoard().isAlreadyHit(point);
+        return players.get(1).getBoard().isAlreadyHit(point);
     }
 
-    private boolean allShipsOfPlayer1Sunk(){
-        for(Ship ship : player1.getShips()){
-            if(!ship.isSunk()){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean allShipsOfPlayer2Sunk(){
-        for(Ship ship : player2.getShips()){
+    public boolean allShipsOfPlayerSunk(Player player){
+        for(Ship ship : player.getShips()){
             if(!ship.isSunk()){
                 return false;
             }
@@ -112,19 +93,14 @@ public class Game {
     }
 
     public Player getCurrentPlayer(){
-        if( 1 == currentPlayer){
-            return player1;
-        } else {
-            return player2;
-        }
+        return players.get(currentPlayer);
     }
 
     public void switchCurrentPlayer(){
-        switch(currentPlayer){
-            case 1:
-                currentPlayer = 2; break;
-            case 2:
-                currentPlayer = 1; break;
-        }
+        currentPlayer = (currentPlayer + 1) % 2;
     }
+
+
+
+
 }

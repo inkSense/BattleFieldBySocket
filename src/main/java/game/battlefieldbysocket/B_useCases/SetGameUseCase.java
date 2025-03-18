@@ -46,11 +46,10 @@ public class SetGameUseCase {
     }
 
     private void distributeShipsRandomly(){
-        for(Ship ship : game.getPlayer1().getShips()){
-            setRandomPosition(ship, game.getPlayer1().getBoard());
-        }
-        for(Ship ship : game.getPlayer2().getShips()){
-            setRandomPosition(ship, game.getPlayer2().getBoard());
+        for(Player player : game.getPlayers()){
+            for(Ship ship : player.getShips()){
+                setRandomPosition(ship, player.getBoard());
+            }
         }
     }
 
