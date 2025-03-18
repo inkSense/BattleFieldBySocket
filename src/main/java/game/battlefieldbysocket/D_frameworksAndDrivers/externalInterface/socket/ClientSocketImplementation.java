@@ -29,16 +29,29 @@ public class ClientSocketImplementation {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            // Beispiel: Sende den JOIN-Befehl an den Server
+            // Sende initialen JOIN-Befehl
             out.println("JOIN MeinName");
-            String response = in.readLine();
-            System.out.println("Antwort vom Server: " + response);
 
-            // Hier kannst du weitere Nachrichten austauschen:
-            // out.println("Weitere Nachricht");
-            // System.out.println("Serverantwort: " + in.readLine());
+            // Starte einen separaten Thread zum kontinuierlichen Lesen vom Server
+            new Thread(() -> {
+                try {
+                    String message;
+                    while ((message = in.readLine()) != null) {
+                        System.out.println("Server: " + message);
+                        // Hier könntest Du das Parsing der Protokoll-Kommandos einbauen
+                    }
+                } catch (IOException e) {
+                    System.out.println("Fehler beim Lesen vom Server: " + e.getMessage());
+                }
+            }).start();
 
-            // Nach dem Austausch kannst du die Verbindung schließen
+            // Optional: Eingabe vom Benutzer lesen, um weitere Nachrichten zu senden
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+            String userInput;
+            while ((userInput = stdIn.readLine()) != null) {
+                out.println(userInput);
+            }
+
             close();
 
         } catch (IOException e) {
@@ -48,24 +61,17 @@ public class ClientSocketImplementation {
 
     private void close() {
         try {
-            if (in != null) {
-                in.close();
-            }
-            if (out != null) {
-                out.close();
-            }
-            if (socket != null && !socket.isClosed()) {
-                socket.close();
-            }
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (socket != null && !socket.isClosed()) socket.close();
             System.out.println("Verbindung geschlossen.");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Main-Methode zum Starten des Clients
     public static void main(String[] args) {
-        String host = "localhost"; // oder die IP-Adresse des Servers
+        String host = "192.168.178.132"; // IP-Adresse des Servers
         int port = 12345;
         ClientSocketImplementation client = new ClientSocketImplementation(host, port);
         client.start();
