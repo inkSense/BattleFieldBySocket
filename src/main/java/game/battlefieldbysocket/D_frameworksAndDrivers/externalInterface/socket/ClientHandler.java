@@ -32,11 +32,9 @@ public class ClientHandler implements Runnable {
     public void run() {
         try {
             String message;
-            // Solange Nachrichten empfangen, verarbeiten wir sie
             while ((message = in.readLine()) != null) {
                 System.out.println("Nachricht von Spieler " + playerId + ": " + message);
-                // Hier könntest du die Nachrichten an die Spiellogik weiterleiten
-                // oder spezifisch parsen (z.B. JOIN, SHOOT, etc.)
+                processCommand(message);
             }
         } catch (IOException e) {
             System.out.println("Verbindung zu Spieler " + playerId + " verloren.");
@@ -48,5 +46,46 @@ public class ClientHandler implements Runnable {
             }
         }
     }
-}
 
+    /**
+     * Parst den eingehenden Befehl und leitet ihn weiter an die Spiellogik.
+     */
+    private void processCommand(String message) {
+        String[] tokens = message.split("\\s+");
+        if (tokens.length == 0) {
+            return;
+        }
+        String command = tokens[0];
+
+        switch (command) {
+            case "JOIN":
+                if (tokens.length >= 2) {
+                    String playerName = tokens[1];
+                    // Hier könntest Du Deine Logik für das Spielbeitreten aufrufen:
+                    System.out.println("Spieler " + playerId + " tritt bei: " + playerName);
+                    // z.B.: gameLogic.joinGame(playerId, playerName);
+                } else {
+                    System.out.println("Ungültiges JOIN-Kommando: " + message);
+                }
+                break;
+            case "SHOOT":
+                if (tokens.length >= 3) {
+                    try {
+                        int x = Integer.parseInt(tokens[1]);
+                        int y = Integer.parseInt(tokens[2]);
+                        // Hier rufst Du Deine Schuss-Logik auf, z.B.:
+                        System.out.println("Spieler " + playerId + " schießt auf (" + x + ", " + y + ")");
+                        // z.B.: gameLogic.shoot(playerId, new Point(x, y));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Ungültige Koordinaten im SHOOT-Kommando: " + message);
+                    }
+                } else {
+                    System.out.println("Ungültiges SHOOT-Kommando: " + message);
+                }
+                break;
+            default:
+                System.out.println("Unbekannter Befehl: " + message);
+                break;
+        }
+    }
+}
