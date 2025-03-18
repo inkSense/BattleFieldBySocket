@@ -64,6 +64,11 @@ public class JavaFxView implements AdapterOutputPort {
     }
 
     @Override
+    public void markFieldWithLabel(Point point, String label) {
+
+    }
+
+    @Override
     public void presentQuestionWhereToShoot() {
 
     }
@@ -73,8 +78,4 @@ public class JavaFxView implements AdapterOutputPort {
         return null;
     }
 
-    @Override
-    public void markFieldWithLabel(Point point) {
-
-    }
 }
