@@ -30,7 +30,15 @@ public class Presenter implements UseCaseOutputPort {
 
     @Override
     public void presentFieldLabel(Point point, String label) {
-        adapterOutputPort.setFieldLabel(point, label);
+        adapterOutputPort.setTextFieldLabel(point, label);
+    }
+
+    public void setFieldToHit(Point point){
+        adapterOutputPort.markFieldWithLabel(point, "X");
+    }
+
+    public void setFieldToStruck(Point point){
+        adapterOutputPort.markFieldWithLabel(point, "HIT");
     }
 
 

@@ -9,7 +9,9 @@ public interface AdapterOutputPort {
 
     Point setOpenForInputAndGetIt();
 
-    void setFieldLabel(Point point, String label);
+    void setTextFieldLabel(Point point, String label);
+
+    void markFieldWithLabel(Point point, String label);
 
 
 }

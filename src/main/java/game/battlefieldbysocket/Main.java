@@ -53,25 +53,4 @@ public class Main extends Application {
         }
     }
 
-    //public class Main extends Application {
-//    @Override
-//    public void start(Stage primaryStage) {
-//        JavaFxView javaFxView = setUp();
-//        Scene scene = javaFxView.createScene();
-//        primaryStage.setScene(scene);
-//        primaryStage.setTitle("Battle Field");
-//        primaryStage.show();
-//    }
-//    private JavaFxView setUp(){
-//        JavaFxView javaFxView = new JavaFxView();
-//        Presenter presenter = new Presenter(javaFxView);
-//        UseCaseInteractor useCaseInteractor = new UseCaseInteractor(presenter);
-//        Controller controller = new Controller(useCaseInteractor);
-//        javaFxView.setController(controller);
-//        return javaFxView;
-//    }
-//    public static void main(String[] args) {
-//        launch();
-//    }
-//}
 }

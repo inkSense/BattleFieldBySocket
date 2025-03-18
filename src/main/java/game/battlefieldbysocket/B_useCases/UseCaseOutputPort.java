@@ -11,4 +11,6 @@ public interface UseCaseOutputPort {
 
     void presentFieldLabel(Point point, String label);
 
+    void setFieldToHit(Point point);
+
 }

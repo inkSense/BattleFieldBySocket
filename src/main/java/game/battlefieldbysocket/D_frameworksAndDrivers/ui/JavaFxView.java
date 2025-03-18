@@ -58,7 +58,7 @@ public class JavaFxView implements AdapterOutputPort {
 
 
     @Override
-    public void setFieldLabel(Point point, String label) {
+    public void setTextFieldLabel(Point point, String label) {
         // logArea.clear();
         logArea.setText(label);
     }
@@ -73,5 +73,8 @@ public class JavaFxView implements AdapterOutputPort {
         return null;
     }
 
+    @Override
+    public void markFieldWithLabel(Point point) {
 
+    }
 }

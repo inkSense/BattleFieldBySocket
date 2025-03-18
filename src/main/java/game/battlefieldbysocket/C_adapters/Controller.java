@@ -15,8 +15,9 @@ public class Controller  {
 
     public void handleFieldClick(Point point) {
 
-        useCaseInteractor.process(point);
+        //useCaseInteractor.process(point);
 
+        useCaseInteractor.testGameTheFirstTime(point);
 
     }
 

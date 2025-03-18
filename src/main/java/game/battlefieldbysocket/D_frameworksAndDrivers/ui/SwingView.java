@@ -13,7 +13,10 @@ public class SwingView implements AdapterOutputPort {
     private Controller controller;
     private final int fieldSideLength = 100;
     private final JPanel grid = new JPanel();
-    private final JTextArea logArea = new JTextArea(); // Log-Bereich
+    private final JTextArea logArea = new JTextArea();
+
+    // Hinzugefügt: Ein 2D-Array für die Felder
+    private JPanel[][] fields;
 
     public SwingView() {
         logArea.setEditable(false);
@@ -26,6 +29,9 @@ public class SwingView implements AdapterOutputPort {
     public void createAndShowGUI() {
         int n = controller.getSideLengthFromGameConf();
 
+        // Array entsprechend der Spielfeldgröße anlegen
+        fields = new JPanel[n][n];
+
         JFrame frame = new JFrame("Battle Field");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(n * fieldSideLength, n * fieldSideLength + 100);
@@ -34,6 +40,7 @@ public class SwingView implements AdapterOutputPort {
         for (int row = 0; row < n; row++) {
             for (int col = 0; col < n; col++) {
                 JPanel field = createClickableField(col, row);
+                fields[row][col] = field; // Speichern
                 grid.add(field);
             }
         }
@@ -59,12 +66,11 @@ public class SwingView implements AdapterOutputPort {
                 controller.handleFieldClick(point);
             }
         });
-
         return panel;
     }
 
     @Override
-    public void setFieldLabel(Point point, String label) {
+    public void setTextFieldLabel(Point point, String label) {
         logArea.setText(label);
     }
 
@@ -76,4 +82,28 @@ public class SwingView implements AdapterOutputPort {
     public Point setOpenForInputAndGetIt() {
         return null;
     }
+
+    public void markFieldWithLabel(Point p, String label) {
+        // Hol das entsprechende Panel
+        JPanel fieldPanel = fields[p.y][p.x];
+
+        // Alles entfernen, damit sich nichts stapelt
+        fieldPanel.removeAll();
+
+        // Label für das X
+        JLabel xLabel = new JLabel(label);
+        xLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        xLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        xLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+        // Zentriert einfügen
+        fieldPanel.setLayout(new BorderLayout());
+        fieldPanel.add(xLabel, BorderLayout.CENTER);
+
+        // Aktualisieren, damit es auch direkt sichtbar wird
+        fieldPanel.revalidate();
+        fieldPanel.repaint();
+    }
+
 }
+

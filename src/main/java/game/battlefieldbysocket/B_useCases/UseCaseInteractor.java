@@ -26,6 +26,10 @@ public class UseCaseInteractor {
         useCaseOutputPort.presentFieldLabel(point, pointString);
     }
 
+    public void testGameTheFirstTime(Point point){
+        useCaseOutputPort.setFieldToHit(point);
+    }
+
     public int getSideLengthFromGameConf(){
         return GameConf.fieldSideLength;
     }
