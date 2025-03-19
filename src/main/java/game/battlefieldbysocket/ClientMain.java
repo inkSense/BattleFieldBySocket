@@ -12,7 +12,7 @@ public class ClientMain {
         SwingView view = new SwingView();
 
         // Erstelle die Netzwerkverbindung
-        ClientSocketImplementation network = new ClientSocketImplementation("192.168.x.y", 12345);
+        ClientSocketImplementation network = new ClientSocketImplementation("192.168.178.132", 12345);
 
         // Erstelle den ClientController und verknüpfe ihn mit der UI und dem Netzwerkadapter
         ClientController clientController = new ClientController(network, view);
