@@ -17,6 +17,5 @@ public interface UseCaseOutputPort {
 
     void setFieldToHit(Point point);
 
-    void setFieldToShipLabel(Point point);
 
 }

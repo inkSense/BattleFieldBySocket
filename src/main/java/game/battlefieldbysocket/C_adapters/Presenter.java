@@ -41,10 +41,6 @@ public class Presenter implements UseCaseOutputPort {
         adapterOutputPort.markFieldWithLabel(point, "HIT");
     }
 
-    public void setFieldToShipLabel(Point point){
-        adapterOutputPort.markFieldWithLabel(point, "Boat");
-    }
-
 
     public void presentGame(Game game){
         Board board = game.getPlayer(0).getBoard();
