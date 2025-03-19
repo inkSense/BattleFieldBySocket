@@ -11,6 +11,9 @@ public class UseCaseInteractor {
 
     private static final Logger log = Logger.getLogger(UseCaseInteractor.class.getName());
 
+    public UseCaseInteractor() {
+    }
+
     public UseCaseInteractor(UseCaseOutputPort port) {
         this.useCaseOutputPort = port;
         this.game = new SetGameUseCase().makeGame();
@@ -21,10 +24,6 @@ public class UseCaseInteractor {
 
     }
 
-    public void presentGame(){
-        useCaseOutputPort.presentGamePlayer1();
-        useCaseOutputPort.presentGamePlayer2();
-    }
 
     public void process(Point point){
         String pointString = point.toString();

@@ -2,6 +2,7 @@ package game.battlefieldbysocket.D_frameworksAndDrivers.ui;
 
 import game.battlefieldbysocket.C_adapters.AdapterOutputPort;
 import game.battlefieldbysocket.C_adapters.Controller;
+import game.battlefieldbysocket.C_adapters.ServerController;
 
 import javax.swing.*;
 import java.awt.*;

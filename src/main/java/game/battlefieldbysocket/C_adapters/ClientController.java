@@ -1,17 +1,22 @@
 package game.battlefieldbysocket.C_adapters;
 
+import game.battlefieldbysocket.A_entities.objectsAndDataStructures.GameConf;
+import game.battlefieldbysocket.B_useCases.UseCaseInteractor;
 import game.battlefieldbysocket.D_frameworksAndDrivers.externalInterface.socket.ClientSocketImplementation;
 import game.battlefieldbysocket.D_frameworksAndDrivers.ui.SwingView;
 import java.awt.*;
+import java.util.logging.Logger;
 
-public class ClientController {
+public class ClientController implements Controller{
 
     private final ClientSocketImplementation network;
     private final SwingView swingView;
+    private static final Logger log = Logger.getLogger(ClientController.class.getName());
 
     public ClientController(ClientSocketImplementation network, SwingView swingView) {
         this.network = network;
         this.swingView = swingView;
+
     }
 
     /**
@@ -48,11 +53,9 @@ public class ClientController {
         // Weitere Nachrichten-Typen können hier verarbeitet werden.
     }
 
-    /**
-     * Beispiel: Liefert die Spielfeldgröße. Diese Information könnte auch
-     * direkt vom Server gesendet werden, hier als Platzhalter.
-     */
+
     public int getSideLengthFromGameConf(){
-        return 10;  // Beispielwert; in der Praxis von der Server-Konfiguration abhängig
+        return GameConf.fieldSideLength;
     }
+
 }

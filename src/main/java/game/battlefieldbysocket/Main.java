@@ -1,7 +1,7 @@
 package game.battlefieldbysocket;
 
 import game.battlefieldbysocket.B_useCases.UseCaseInteractor;
-import game.battlefieldbysocket.C_adapters.Controller;
+import game.battlefieldbysocket.C_adapters.ServerController;
 import game.battlefieldbysocket.C_adapters.Presenter;
 //import game.battlefieldbysocket.D_frameworksAndDrivers.ui.JavaFxView;
 //import javafx.scene.Scene;
@@ -41,8 +41,8 @@ public class Main extends Application {
     private void setUp(AdapterOutputPort view) {
         Presenter presenter = new Presenter(view);
         UseCaseInteractor useCaseInteractor = new UseCaseInteractor(presenter);
-        Controller controller = new Controller(useCaseInteractor);
-        view.setController(controller);
+        ServerController serverController = new ServerController(useCaseInteractor);
+        view.setController(serverController);
     }
 
     public static void main(String[] args) {

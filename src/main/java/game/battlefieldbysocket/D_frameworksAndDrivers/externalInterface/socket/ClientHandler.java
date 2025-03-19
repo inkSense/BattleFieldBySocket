@@ -12,16 +12,23 @@ public class ClientHandler implements Runnable {
     private int playerId;
     private BufferedReader in;
     private PrintWriter out;
+    private ServerSocketImplementation server; // Referenz auf den Server
 
-    public ClientHandler(Socket socket, int playerId) {
+    public ClientHandler(Socket socket, int playerId, ServerSocketImplementation server) {
         this.socket = socket;
         this.playerId = playerId;
+        this.server = server;
         try {
             in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             out = new PrintWriter(this.socket.getOutputStream(), true);
         } catch(IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Getter für playerId
+    public int getPlayerId() {
+        return playerId;
     }
 
     public void sendMessage(String message) {
@@ -48,7 +55,7 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Parst den eingehenden Befehl und leitet ihn weiter an die Spiellogik.
+     * Parst den eingehenden Befehl und leitet ihn weiter an die Spiellogik bzw. an den anderen Client.
      */
     private void processCommand(String message) {
         String[] tokens = message.split("\\s+");
@@ -56,14 +63,12 @@ public class ClientHandler implements Runnable {
             return;
         }
         String command = tokens[0];
-
         switch (command) {
             case "JOIN":
                 if (tokens.length >= 2) {
                     String playerName = tokens[1];
-                    // Hier könntest Du Deine Logik für das Spielbeitreten aufrufen:
                     System.out.println("Spieler " + playerId + " tritt bei: " + playerName);
-                    // z.B.: gameLogic.joinGame(playerId, playerName);
+                    // Hier könntest Du z.B. gameLogic.joinGame(playerId, playerName) aufrufen
                 } else {
                     System.out.println("Ungültiges JOIN-Kommando: " + message);
                 }
@@ -73,9 +78,11 @@ public class ClientHandler implements Runnable {
                     try {
                         int x = Integer.parseInt(tokens[1]);
                         int y = Integer.parseInt(tokens[2]);
-                        // Hier rufst Du Deine Schuss-Logik auf, z.B.:
                         System.out.println("Spieler " + playerId + " schießt auf (" + x + ", " + y + ")");
-                        // z.B.: gameLogic.shoot(playerId, new Point(x, y));
+                        // Anstatt lokal zu verarbeiten, senden wir eine Nachricht an den anderen Client.
+                        // Hier schicken wir z. B. "OPPONENT_MOVE x y X"
+                        String opponentMessage = "OPPONENT_MOVE " + x + " " + y + " X";
+                        server.broadcastExcept(playerId, opponentMessage);
                     } catch (NumberFormatException e) {
                         System.out.println("Ungültige Koordinaten im SHOOT-Kommando: " + message);
                     }

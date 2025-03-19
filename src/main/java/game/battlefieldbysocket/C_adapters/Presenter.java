@@ -12,12 +12,10 @@ public class Presenter implements UseCaseOutputPort {
         this.adapterOutputPort = adapterOutputPort;
     }
 
-    @Override
     public void presentGamePlayer1() {
         // adapterInputPort
     }
 
-    @Override
     public void presentGamePlayer2() {
         // adapterInputPort
     }

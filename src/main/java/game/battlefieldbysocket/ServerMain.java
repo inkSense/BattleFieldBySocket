@@ -1,4 +1,6 @@
-package game.battlefieldbysocket.D_frameworksAndDrivers.externalInterface.socket;
+package game.battlefieldbysocket;
+
+import game.battlefieldbysocket.D_frameworksAndDrivers.externalInterface.socket.ServerSocketImplementation;
 
 public class ServerMain {
     public static void main(String[] args) {

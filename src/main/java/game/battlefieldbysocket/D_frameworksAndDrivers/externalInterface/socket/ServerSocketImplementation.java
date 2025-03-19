@@ -22,19 +22,20 @@ public class ServerSocketImplementation {
             serverSocket = new ServerSocket(port);
             System.out.println("Server läuft auf Port " + port);
 
-            // Endlosschleife: Wartet auf neue Clients
+            // Endlosschleife: Warte auf neue Clients
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Neuer Client verbunden: " + clientSocket.getInetAddress());
 
-                ClientHandler handler = new ClientHandler(clientSocket, nextPlayerId++);
+                // Erzeuge einen neuen ClientHandler und übergebe 'this'
+                ClientHandler handler = new ClientHandler(clientSocket, nextPlayerId++, this);
                 clients.add(handler);
                 new Thread(handler).start();
 
                 // Sende Begrüßung an den Client
                 handler.sendMessage("WELCOME " + (nextPlayerId - 1));
 
-                // Wenn zwei Spieler verbunden sind, können wir z.B. das Spiel starten:
+                // Sobald zwei Spieler verbunden sind, starte das Spiel
                 if (clients.size() == 2) {
                     broadcast("START");
                 }
@@ -47,9 +48,20 @@ public class ServerSocketImplementation {
     /**
      * Sendet eine Nachricht an alle verbundenen Clients.
      */
-    private void broadcast(String message) {
+    public void broadcast(String message) {
         for (ClientHandler client : clients) {
             client.sendMessage(message);
+        }
+    }
+
+    /**
+     * Sendet eine Nachricht an alle Clients außer dem, dessen playerId senderId entspricht.
+     */
+    public void broadcastExcept(int senderId, String message) {
+        for (ClientHandler client : clients) {
+            if (client.getPlayerId() != senderId) {
+                client.sendMessage(message);
+            }
         }
     }
 }

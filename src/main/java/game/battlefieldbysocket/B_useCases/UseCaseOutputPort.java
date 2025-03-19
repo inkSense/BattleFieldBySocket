@@ -6,9 +6,6 @@ import java.awt.*;
 
 public interface UseCaseOutputPort {
 
-    void presentGamePlayer1();
-    void presentGamePlayer2();
-
     Point askPlayerWhereToShoot(int playerNumber);
 
     void presentFieldLabel(Point point, String label);
